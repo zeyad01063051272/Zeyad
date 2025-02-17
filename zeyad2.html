@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسجيل الدخول</title>
+  <link rel="stylesheet" href="style.css">
+<style type="text/css" id="dcoder_stylesheet">body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.login-container {
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  text-align: center;
+}
+h1 {
+  margin-bottom: 20px;
+  color: #333;
+}
+.input-group {
+  margin-bottom: 15px;
+}
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #0056b3;
+}</style></head>
+<body>
+  <div class="login-container">
+    <h1>تسجيل الدخول</h1>
+    <form id="loginForm">
+      <div class="input-group">
+        <input type="text" placeholder="رقم الهاتف" name="phone" required>
+      </div>
+      <div class="input-group">
+        <input type="email" placeholder="البريد الإلكتروني" name="email" id="email" required>
+        <button type="button" id="sendCode">إرسال رمز التحقق</button>
+      </div>
+      <div class="input-group">
+        <input type="text" placeholder="أدخل رمز التحقق" name="code" id="code" required>
+      </div>
+      <div class="input-group">
+        <input type="password" placeholder="كلمة المرور" name="password" required>
+      </div>
+      <div class="input-group">
+        <input type="text" id="ipAddress" readonly placeholder="عنوان الـ IP">
+      </div>
+      <button type="submit">تسجيل الدخول</button>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+
+<script type="text/javascript" id="dcoder_script">document.addEventListener("DOMContentLoaded", function () {
+  // الحصول على عنوان الـ IP
+  fetch('https://api.ipify.org?format=json')
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('ipAddress').value = data.ip;
+    })
+    .catch(error => {
+      console.error("خطأ في الحصول على عنوان الـ IP:", error);
+    });
+
+  // إرسال رمز التحقق عند الضغط على الزر
+  document.getElementById('sendCode').addEventListener('click', function () {
+    const email = document.getElementById('email').value;
+    if (email) {
+      alert('تم إرسال رمز التحقق إلى: ' + email);
+      // هنا يجب إرسال الكود فعليًا عبر الخادم (Python أو Node.js)
+    } else {
+      alert('يرجى إدخال البريد الإلكتروني أولاً');
+    }
+  });
+
+  // التحقق من تسجيل الدخول
+  document.getElementById('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const phone = e.target.phone.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    const code = e.target.code.value;
+    const ip = document.getElementById('ipAddress').value;
+
+    if (!phone || !email || !password || !code || !ip) {
+      alert('يرجى تعبئة جميع الحقول!');
+      return;
+    }
+
+    alert('تم تسجيل الدخول بنجاح! سيتم تحويلك الآن...');
+    window.location.href = "https://www.mi.com"; // تحويل المستخدم تلقائيًا
+  });
+});</script></body></html>
